@@ -8,7 +8,7 @@ def csv_opener(csv_file):
     data = [] #convert csv_file data into list 
 
     with open (csv_file) as file:
-        csv_generated_object = csv.reader(csv_file)
+        csv_generated_object = csv.reader(file)
         for row in csv_generated_object:
             data.append(row)
 
@@ -16,7 +16,7 @@ def csv_opener(csv_file):
 
 def csv_opener_local():
     data = []
-    with open("a1.small.csv") as file:
+    with open("a1.large.csv") as file:
         csvreader = csv.reader(file)
         for row in csvreader:
             #print(row)
@@ -36,22 +36,24 @@ def insertion_sort(list): #input list
             j-=1
         list[j+1]=temp
 
+    return list
+
 
 
 #testing the code for sorting
 input_argument= sys.argv[1] + ".csv"
 print ("the input is: ",input_argument)
-list = csv_opener_local()
-#print original list
-for i in range(0,len(list)):
-    print(list[i])
+list = csv_opener(input_argument)
+
+
+start_time = time.time()
 new_list=insertion_sort(list)
-
-print(len(list))
-#print(list)
+end_time = time.time()
 
 for i in range(0,len(list)):
     print(list[i])
+
+print("Time for Insertion Sort: ", 1000*(end_time-start_time))
 
 #sort list
 

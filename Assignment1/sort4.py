@@ -28,27 +28,39 @@ def bubble_sort(list):
     #length of array
     n=len(list)
     #i: used to keep track of end range for y to travel
+    #flag for swapping
     for i in range(0,n-1):
+        swap= False
         for j in range(0, n-1-i):
             if int(list[j+1][0]) < int(list[j][0]):
                 temp = list[j+1]
                 list[j+1]=list[j]
                 list[j]=temp
+                
+                #swap occured
+                swap=True
 
-    return list
+        if(swap==False): #since no swap had occured at given iteration it means the list in its current form is already sorted
+            break;   
 
+    return list         
 
 #testing the code for sorting
 input_argument= sys.argv[1] + ".csv"
 print ("the input is: ",input_argument)
 list = csv_opener(input_argument)
-
-
+#print original list
+# for i in range(0,len(list)):
+#     print(list[i])
 start_time = time.time()
-new_list=bubble_sort(list)
+new_list=bubble_sort(list[0:9000])
 end_time = time.time()
 
-for i in range(0,len(list)):
-    print(list[i])
 
-print("Time for Bubble Sort: ", 1000*(end_time-start_time))
+for i in range(0,len(new_list[0:9000])):
+    print(new_list[i])
+
+print("Time for Optimized Bubble Sort: ", 1000*(end_time-start_time))
+
+
+# bubble sort guide: https://www.programiz.com/dsa/bubble-sort
