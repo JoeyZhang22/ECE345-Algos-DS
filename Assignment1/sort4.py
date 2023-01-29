@@ -53,12 +53,11 @@ list = csv_opener(input_argument)
 # for i in range(0,len(list)):
 #     print(list[i])
 start_time = time.time()
-new_list=bubble_sort(list[0:9000])
+new_list=bubble_sort(list)
 end_time = time.time()
 
-
-for i in range(0,len(new_list[0:9000])):
-    print(new_list[i])
+for i in range(0,len(list)):
+    print(list[i])
 
 print("Time for Optimized Bubble Sort: ", 1000*(end_time-start_time))
 
