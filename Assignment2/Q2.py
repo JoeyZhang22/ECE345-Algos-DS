@@ -1,5 +1,3 @@
-#source of code https://www.geeksforgeeks.org/implementation-of-hashing-with-chaining-in-python/
-
 #read the passwords.txt file
 with open('passwords6.txt') as f:
     lines=f.read().splitlines()
@@ -99,5 +97,7 @@ print('number of collissions is',collisioncounter)
 
 #check_pass('123456',HashTable,lines)
 
+#TESTING
 #WIx33Fn
 #nF33xIW
+#source of code https://www.geeksforgeeks.org/implementation-of-hashing-with-chaining-in-python/
