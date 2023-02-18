@@ -1,11 +1,11 @@
 #source of code https://www.geeksforgeeks.org/implementation-of-hashing-with-chaining-in-python/
 
 #read the passwords.txt file
-with open('passwords.txt') as f:
+with open('passwords6.txt') as f:
     lines=f.read().splitlines()
 
 #print(lines)
-#print(len(lines))
+print(len(lines))
 #n=len(lines) #number of keys from passwords.txt
 
 def display_hash(hashTable):
@@ -30,7 +30,7 @@ def djb2(stringinput,HashTable):
     return hash % len(HashTable)
 
 #create hashtable as a nested list
-HashTable = [[] for _ in range(len(lines))]
+HashTable = [[] for _ in range(len(lines)+8000)]
 # the _ means we don't care about iterator value,we could have used a variable
 #even if table has m=n, there is chance of remaping
 
@@ -95,6 +95,7 @@ for i in HashTable:
         collisioncounter+= len(i)-1
 
 print('number of collissions is',collisioncounter)
+
 
 #check_pass('123456',HashTable,lines)
 
