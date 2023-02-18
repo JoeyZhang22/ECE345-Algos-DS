@@ -94,10 +94,4 @@ for i in HashTable:
 
 print('number of collissions is',collisioncounter)
 
-
-#check_pass('123456',HashTable,lines)
-
-#TESTING
-#WIx33Fn
-#nF33xIW
-#source of code https://www.geeksforgeeks.org/implementation-of-hashing-with-chaining-in-python/
+#source used: https://www.geeksforgeeks.org/implementation-of-hashing-with-chaining-in-python/
