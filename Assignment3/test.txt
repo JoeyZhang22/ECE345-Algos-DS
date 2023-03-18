@@ -1,0 +1,3 @@
+Finished creating graph
+starting algo: 
+TOP-1 INFLUENCER: 12 SPREAD: 98 TIME: 17.8320209980011
