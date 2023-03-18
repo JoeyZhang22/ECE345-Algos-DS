@@ -10,8 +10,8 @@ import random
  
 #Dijkstra's shortest path algorithm: good to use it for finding shortest path from one source node to all other nodes of graph with weights
 #that are not negative
-def shortest_path_algorithm(nodes,graph_matrix, T):
-    n=len(graph_matrix)
+def shortest_path_algorithm(nodes,graph_adj_list, T, max_val):
+    n=max_val+1
 
     #results to be returned
     top_source_node=0; #arbitrarily set as 0 -> to be changed iteratively as algorithm runs
@@ -35,10 +35,6 @@ def shortest_path_algorithm(nodes,graph_matrix, T):
         heap=[]
         heapq.heappush(heap, (0,int(start))) #insert first element of heap as the start source and its distance: heapq sorts according to first element of tuple
 
-        #for tracking multiple max influencers
-        most_influential=[]
-        maxheap=[]
-
         #explore all possible nodes until heap is completed exhausted of all resources
         while heap:
             #pop smallest distance from heap
@@ -51,22 +47,37 @@ def shortest_path_algorithm(nodes,graph_matrix, T):
             #mark current node as visited
             visited[current]=True
 
-            #Iterate over the neighboring nodes of current node
-            for neighbor in range(n):
-                #Check if the neighbor exists. If it does add it to the heap for the next iteration
-                if graph_matrix[current][neighbor]>0:
-                    #calculate distance to neighbor node
-                    tentative_distance = distance + graph_matrix[current][neighbor]
+            # #Iterate over the neighboring nodes of current node
+            # for neighbor in range(n):
+            #     #Check if the neighbor exists. If it does add it to the heap for the next iteration
+            #     if graph_adj_list[current][neighbor]>0:
+            #         #calculate distance to neighbor node
+            #         tentative_distance = distance + graph_adj_list[current][neighbor]
 
-                    #check if the tentatively calculated distance is smaller than the current distance
-                    if tentative_distance< time_distance[neighbor]:
-                        #update distance for this neighbor and push neighbor node onto heap
-                        time_distance[neighbor]=tentative_distance
-                        heapq.heappush(heap, (tentative_distance, neighbor))
+            #         #check if the tentatively calculated distance is smaller than the current distance
+            #         if tentative_distance< time_distance[neighbor]:
+            #             #update distance for this neighbor and push neighbor node onto heap
+            #             time_distance[neighbor]=tentative_distance
+            #             heapq.heappush(heap, (tentative_distance, neighbor))
+                        
+            # Iterate over the neighboring nodes of current node
+            if current not in graph_adj_list:
+                continue
 
+            for neighbor, weight in graph_adj_list[current]:
+                # calculate distance to neighbor node
+                tentative_distance = distance + weight
+
+                # check if the tentatively calculated distance is smaller than the current distance
+                #print(neighbor)
+                #print("length of distancce array" ,len(time_distance))
+                if tentative_distance < time_distance[neighbor]:
+                    # update distance for this neighbor and push neighbor node onto heap
+                    time_distance[neighbor] = tentative_distance
+                    heapq.heappush(heap, (tentative_distance, neighbor))
         #Update current best source node with most spread 
         # print(T)
-        print(time_distance)
+        #print(time_distance)
         count_of_nodes_influenced=0;
         for distance_of_node in time_distance:
             if distance_of_node>=0:
@@ -99,7 +110,7 @@ def shortest_path_algorithm(nodes,graph_matrix, T):
     return top_source_node,count_influence
 
 #creates adjaceny matrix and create return set of nodes
-def create_graph (input_text_file, graph_matrix):
+def create_graph_matrix (input_text_file, graph_matrix):
     file = open(input_text_file, "r")
 
     #initialize set
@@ -113,27 +124,39 @@ def create_graph (input_text_file, graph_matrix):
         
         graph_matrix[int(elements[0])][int(elements[1])]=elements[2]
 
-    return set_of_v  
+    return set_of_v
+
+#creates adjacnecy List
+def create_adjacency_list(input_text_file):
+    adjacency_list = {}# using dictionary to store 
+    set_of_v=set()
+    max_value_of_nodes=0
+    with open(input_text_file, 'r') as file:
+        for line in file:
+            elements = line.split()
+            vertex = int(elements[0])
+            edge = int(elements[1])
+            weight = float(elements[2])
+            if vertex not in adjacency_list:
+                adjacency_list[vertex] = []
+            adjacency_list[vertex].append((edge, weight))
+
+            #adda nodes into 
+            set_of_v.add(int(elements[0]))
+            max_value_of_nodes=max(vertex,edge,max_value_of_nodes)
+    return adjacency_list,set_of_v,max_value_of_nodes
 
 #main of program
 input_text_file= sys.argv[1] 
 T=sys.argv[2]
 
 #initialization
-graph_matrix = np.zeros((4500,4500)) #reserve adjacency matrix for 100 nodes
-nodes= create_graph(input_text_file,graph_matrix)
-
-print("Finished creating graph")
-
-#testing print's
-# print(graph_matrix[4])
-# print(nodes)
+graph_adj_list, nodes, max_val= create_adjacency_list(input_text_file)
 
 #time start:
 start_time=time.time()
 #algorithm 
-print("starting algo: ")
-top_source_node,spread=shortest_path_algorithm(nodes,graph_matrix, T)
+top_source_node,spread=shortest_path_algorithm(nodes,graph_adj_list, T, max_val)
 #time end:
 end_time=time.time()
 
