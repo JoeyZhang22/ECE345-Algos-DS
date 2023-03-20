@@ -81,7 +81,7 @@ def shortest_path_algorithm(nodes,graph_adj_list, T, max_val):
         count_of_nodes_influenced=0;
         for distance_of_node in time_distance:
             if distance_of_node>=0:
-                if distance_of_node<int(T):
+                if distance_of_node<float(T):
                     count_of_nodes_influenced=count_of_nodes_influenced + 1
         #update only if current count is greater than previous count_influence
         if count_of_nodes_influenced>count_influence:
